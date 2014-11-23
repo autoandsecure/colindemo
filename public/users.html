@@ -1,0 +1,66 @@
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Colindemo user management</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="./javascripts/angular.min.js"></script>
+    <script src="./javascripts/myjs.js"></script>
+</head>
+<body>
+<div class="loginbar" ng-controller="LoginCtrl">
+    <form  ng-show="!loggedin" id="login-form" ng-submit="login()" enctype="multipart/form-data">
+        <div class="">
+            default user:colin1 and pwd:123456
+            <label>USERNAME</label>
+            <input type="text" ng-model="username" placeholder="User…"/>
+            <label>PASSWORD</label>
+            <input type="password" ng-model="pwd" placeholder="Password…"/>
+            <input type="submit"  value="LOGIN"/> {{status}}
+        </div>
+    </form><div ng-show="loggedin">current user:{{currentuser}}<a href='' ng-click='logout()'>logout</a></div>
+</div><br>
+<div ng-controller="UserListCtrl" id="UserListCtrl" hidden>
+
+    <div class="statusbar">{{status}}</div>
+    
+    Search: <input ng-model="userfilter">
+    <div class="span10">
+        <!--Body content-->
+        <table class="users">
+            <thead><tr><th>username:</th><th>password:</th><th>email:</th><th>action:</th></tr></thead>
+            <tr ng-repeat="user in users | filter:userfilter ">
+                <td>{{user.username}}</td><td>{{user.password}}</td><td>{{user.email}}</td><td><a hfre='#' ng-click='deleteUser($index)'>Delete</a></td>
+            </tr>
+        </table> 
+    </div>
+    
+    
+    <form name="myform" id="myform" ng-submit="save()">
+        <fieldset>
+            <legend>New User</legend>
+                <div class="control-group">
+                    <table>
+                        <tr>
+                            <td>username:</td><td><input type="text" placeholder="User…" ng-model="username" size=40 required/></td>
+                        </tr>
+                        <tr>
+                            <td>password:</td><td><input type="password" placeholder="Password…" ng-model="pwd" size=40 required/></td>
+                        </tr>
+                        <tr>
+                            <td>password again:</td><td><input type="password" placeholder="Confirm Password" ng-model="confirmpwd" size=40 required/></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td><td><input type="text" placeholder="Email…" ng-model="email" size=40 required/></td>
+                        </tr>
+                    </table>
+                    <button type="submit" >add user...</button>
+                </div>
+        </fieldset>
+        <p>
+             <div></div>
+        </p>
+    </form>
+
+</div>
+</body>
+</html>
