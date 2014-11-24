@@ -11,7 +11,7 @@ Features include:
 - Add user
 - Login 
 - Users can be deleted
-- Users can be stored in MongoDB
+- Users are stored in MongoDB
 
 **Caution:** This repository is developed in sync with [Express framework](http://expressjs.com/) for node.js.
 
