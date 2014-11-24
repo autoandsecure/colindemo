@@ -6,7 +6,7 @@
     <script src="./javascripts/angular.min.js"></script>
     <script src="./javascripts/myjs.js"></script>
 </head>
-<body>
+<body ng-controller="parentCtrl">
 <div class="loginbar" ng-controller="LoginCtrl">
     <form  ng-show="!loggedin" id="login-form" ng-submit="login()" enctype="multipart/form-data">
         <div class="">
@@ -19,7 +19,7 @@
         </div>
     </form><div ng-show="loggedin">current user:{{currentuser}}<a href='' ng-click='logout()'>logout</a></div>
 </div><br>
-<div ng-controller="UserListCtrl" id="UserListCtrl" hidden>
+<div ng-controller="UserListCtrl" id="UserListCtrl" ng-show="loggedin1">
 
     <div class="statusbar">{{status}}</div>
     
