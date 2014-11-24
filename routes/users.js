@@ -186,7 +186,7 @@ exports.login = function(req, res){
     res.writeHead(200,{'Conten-Type':'application/json'});//sending data via json
     var errors = req.validationErrors();
     if (errors) {
-        return res.end('{"currentuser":"'+req.session.username+'","message":"'+'error:An error has occurred - ' + errors[0].msg+'"}');
+        return res.end('{"currentuser":"","message":"'+'error:An error has occurred - ' + errors[0].msg+'"}');
     }
 
     db.collection(yourCollectionName, function(err, collection) {
@@ -196,7 +196,7 @@ exports.login = function(req, res){
                 res.end('{"currentuser":"'+req.session.username+'"}');
                 
             } else {
-                res.end('{"currentuser":"'+req.session.username+'","message":"username:'+req.body.username
+                res.end('{"currentuser":"","message":"username:'+req.body.username
                         +', loginErr:'+'Username or password is wrong!"}');
             }
         });
