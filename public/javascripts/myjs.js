@@ -22,7 +22,13 @@ myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
           })
           .error(function (data, status, headers, config) {
           });
-          if (typeof $scope.currentuser=='undefined'){$scope.loggedin=false;}else{$scope.loggedin=true;document.getElementById('UserListCtrl').style.display = 'block'};
+        if ($scope.currentuser){
+            $scope.loggedin=false;
+            document.getElementById('UserListCtrl').style.display = 'none';
+          }else{
+            $scope.loggedin=true;
+            document.getElementById('UserListCtrl').style.display = 'block';
+          };
     };
     //user logout
     $scope.logout = function() {
