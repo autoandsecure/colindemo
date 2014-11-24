@@ -1,5 +1,15 @@
 var myApp = angular.module('myApp', []); // Taking Angular Application in Javascript Variable
 
+//use parent controller to cooperate event(s) between sub controllers
+myApp.controller("parentCtrl",
+function ($scope) {
+    $scope.$on("LoginCtrlChanged", 
+    function (event, msg) {
+        console.log("parent", msg);
+        $scope.$broadcast("LoginCtrlChangedFromParrent", msg);
+    });
+})
+
 myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
     $scope.loggedin = false;
     
@@ -22,13 +32,15 @@ myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
           })
           .error(function (data, status, headers, config) {
           });
-        if ($scope.currentuser){
+          if ($scope.currentuser){
             $scope.loggedin=false;
             document.getElementById('UserListCtrl').style.display = 'none';
           }else{
             $scope.loggedin=true;
             document.getElementById('UserListCtrl').style.display = 'block';
           };
+          //tell parent controller something happened
+          $scope.$emit("LoginCtrlChanged", $scope.loggedin);
     };
     //user logout
     $scope.logout = function() {
@@ -47,7 +59,15 @@ myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
 
 //user management part
 myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
-    
+  
+    $scope.loggedin1=false;
+	//listen to parent event that logged in or out
+    $scope.$on("LoginCtrlChangedFromParrent",
+      function (event, msg) {
+          console.log("UserListCtrl", msg);
+          $scope.loggedin1 = msg;
+      });
+      
     // get user list
     $scope.list = function() {$http({
           method: 'GET',
