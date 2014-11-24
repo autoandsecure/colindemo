@@ -22,7 +22,9 @@ Documentation
 Installation
 ------------
 
-npm install
+1. npm install
+2. Create a 'test' MongoDB database ( the app will insert sample users to 'user' collection) 
+
 
 Reporting an issue or a feature request
 ---------------------------------------

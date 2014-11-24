@@ -27,32 +27,34 @@ myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
             data:  formData
           })
           .success(function (data, status, headers, config) {
-            $scope.currentuser=data.currentuser;
+            $scope.currentuser=data.currentuser?data.currentuser:$scope.currentuser;
+            //console.log("currentuser:",$scope.currentuser);
             $scope.status = data.message;
-          })
+            if ($scope.currentuser){
+                    $scope.loggedin=true;
+                }else{
+                  $scope.loggedin=false;
+                };
+                //tell parent controller something happened
+                $scope.$emit("LoginCtrlChanged", $scope.loggedin);
+              })
           .error(function (data, status, headers, config) {
           });
-          if ($scope.currentuser){
-            $scope.loggedin=false;
-            document.getElementById('UserListCtrl').style.display = 'none';
-          }else{
-            $scope.loggedin=true;
-            document.getElementById('UserListCtrl').style.display = 'block';
-          };
-          //tell parent controller something happened
-          $scope.$emit("LoginCtrlChanged", $scope.loggedin);
+
     };
     //user logout
     $scope.logout = function() {
         $http({
             method: 'GET',
             url: '/logout'
-            })
-        $scope.loggedin=false;
-        $scope.username='';
-        $scope.pwd='';
-        $scope.loggedin=false;
-        document.getElementById('UserListCtrl').style.display = 'none';
+            });//.success(function(){
+                $scope.currentuser=null;
+                $scope.loggedin=false;
+                $scope.username='';
+                $scope.pwd='';
+                //tell parent controller something happened
+                $scope.$emit("LoginCtrlChanged", $scope.loggedin);
+            //})
     };
     
 }]);
@@ -66,6 +68,7 @@ myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
       function (event, msg) {
           console.log("UserListCtrl", msg);
           $scope.loggedin1 = msg;
+          if ($scope.loggedin1){$scope.list()};
       });
       
     // get user list
@@ -124,6 +127,5 @@ myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
             $scope.status = data.message;
           });
     };
-
   
 }]);
