@@ -26,6 +26,7 @@ app.post('/newuser',user.newUser);
 app.get('/deleteuser/:id', user.deleteUser);
 app.post('/login', user.login);
 app.get('/logout', user.logout);
+app.get('/currentuser', user.currentuser);
 
 app.listen(app.get('port'));
 console.log('Server is listening on port '+app.get('port')+'...');

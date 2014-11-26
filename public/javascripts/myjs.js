@@ -11,7 +11,12 @@ function ($scope) {
 })
 
 myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
-    $scope.loggedin = false;
+    
+    $http.get('/currentuser').success(function(data){
+        $scope.currentuser = data.currentuser;
+        $scope.loggedin = $scope.currentuser=='undefined'?false:true;
+        $scope.$emit("LoginCtrlChanged", $scope.loggedin);
+    });
     
     $scope.login = function() {
     // Preparing the login Data from the Angular Model to send to the Server. 
@@ -62,8 +67,7 @@ myApp.controller('LoginCtrl', ['$scope', '$http', function ($scope, $http){
 //user management part
 myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
   
-    $scope.loggedin1=false;
-	//listen to parent event that logged in or out
+  	//listen to parent event that logged in or out
     $scope.$on("LoginCtrlChangedFromParrent",
       function (event, msg) {
           console.log("UserListCtrl", msg);

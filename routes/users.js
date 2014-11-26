@@ -205,8 +205,6 @@ exports.login = function(req, res){
 };
 
 
-
-
 /*
 *  Check the user is logged or not.
 */
@@ -226,3 +224,10 @@ exports.logout = function(req, res){
 };
 
 
+/*
+*  Check the user is logged or not.
+*/
+exports.currentuser = function(req, res) {
+    res.writeHead(200,{'Conten-Type':'application/json'});//sending data via json
+    res.end('{"currentuser":"'+req.session.username+'"}');
+}

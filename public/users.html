@@ -11,14 +11,14 @@
 <div class="nav navbar navbar-inverse navbar-fixed-top" ng-controller="LoginCtrl">
     <form  ng-show="!loggedin" id="login-form" ng-submit="login()" enctype="multipart/form-data">
         <div class="">
-            default user:colin1 and pwd:123456
+            <label>default user:colin1 and pwd:123456</label>
             <label>USERNAME</label>
             <input type="text" ng-model="username" placeholder="User…"/>
             <label>PASSWORD</label>
             <input type="password" ng-model="pwd" placeholder="Password…"/>
             <input type="submit"  value="LOGIN"/> {{status}}
         </div>
-    </form><div ng-show="loggedin">current user:{{currentuser}}<a href='' ng-click='logout()'>logout</a></div>
+    </form><div ng-show="loggedin"><label>current user:{{currentuser}}</label><a href='' ng-click='logout()'>logout</a></div>
 </div><br>
 <div ng-controller="UserListCtrl" id="UserListCtrl" ng-show="loggedin1">
 
