@@ -120,7 +120,7 @@ myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
     $scope.deleteUser = function(index){
         if(!confirm('Do you want to delete?')){return};
         $http({
-            method: 'get',
+            method: 'GET',
             url: '/deleteuser/'+$scope.users[index]._id
           })
           .success(function (data, status, headers, config) {
@@ -131,5 +131,26 @@ myApp.controller('UserListCtrl', ['$scope','$http', function ($scope, $http) {
             $scope.status = data.message;
           });
     };
-  
+
+    //update user
+    $scope.updateUser = function(index){
+        $http({
+            method: 'POST',
+            url: '/updateuser',
+            data: {
+                "_id": $scope.users[index]._id,
+                'username' : $scope.users[index].username,
+                'pwd' : $scope.users[index].password,
+    	        'email' : $scope.users[index].email
+                    }
+          })
+          .success(function (data, status, headers, config) {
+            $scope.list();
+            $scope.status = data.message;
+          })
+          .error(function (data, status, headers, config) {
+            $scope.status = data.message;
+          });
+    };
+    
 }]);

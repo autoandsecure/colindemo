@@ -11,22 +11,3 @@ a {
   color: black;background-color:yellow;
 }
 
-table.users{
-border:1px solid #cad9ea;
-color:#666;
-}
-table.users th {
-background-repeat:repeat-x;
-height:14px;
-}
-table.users td,table.users th{
-border:1px solid #cad9ea;
-padding:0 0em 0;
-}
-table.users tr.alter{
-background-color:#f5fafe;
-}
-table.users input{
-margin-right: 0em;
-height:12px;
-}

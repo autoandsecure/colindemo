@@ -24,6 +24,7 @@ app.get('/', user.index);
 app.get('/listusers',user.listusers);
 app.post('/newuser',user.newUser);
 app.get('/deleteuser/:id', user.deleteUser);
+app.post('/updateuser', user.updateUser);
 app.post('/login', user.login);
 app.get('/logout', user.logout);
 app.get('/currentuser', user.currentuser);

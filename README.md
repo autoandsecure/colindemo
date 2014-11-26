@@ -8,9 +8,8 @@ This application have used [express-validator](https://github.com/ctavan/express
 
 Features include:
 
-- Add user
+- Add user, delete user, update user
 - Login 
-- Users can be deleted
 - Users are stored in MongoDB
 
 **Caution:** This repository is developed in sync with [Express framework](http://expressjs.com/) for node.js.

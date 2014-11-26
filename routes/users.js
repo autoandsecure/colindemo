@@ -111,6 +111,7 @@ exports.listusers = function(req, res) {
 *  add new user
 */
 exports.newUser = function(req, res){
+    //must login before operate users
     if (!exports.isLoggedIn(req, res)) {
         return res.end('{"message":"you need login"}');
     };
@@ -124,15 +125,15 @@ exports.newUser = function(req, res){
     var errors = req.validationErrors();
     if (errors) {
         return res.end('{"message":"'+'login:'+req.session.username+',  username:'+req.body.username
-        +', Err:'+errors[0].msg+' , email:'+req.body.email+'"}'
+        +', add user Err:'+errors[0].msg+' , email:'+req.body.email+'"}'
         );
-    }
+    };
 
     db.collection(yourCollectionName, function (err, collection) {
         collection.findOne({'email':req.body.email}, function(err, result) {
             if (result) {
                 res.end('{"message":"'+'login:'+req.session.username+',  username:'+req.body.username
-                +', Err:'+'This email is already exist!'+' , email:'+req.body.email+'"}'
+                +', add user Err:'+'This email is already exist!'+' , email:'+req.body.email+'"}'
                 );
             } else {
                 collection.insert({
@@ -154,6 +155,38 @@ exports.newUser = function(req, res){
 };
 
 /*
+*  update user.
+*/
+exports.updateUser = function(req, res) {
+    if (!exports.isLoggedIn(req, res)) {
+        return res.end('{"message":"you need login"}');
+    };
+    req.assert('email', 'Please enter a valid email').len(6,64).isEmail();
+    req.assert('username', "The username can't be empty!").notEmpty();
+    req.assert('pwd', "The password can't be empty and 6 - 16 characters required").notEmpty().len(6,16);
+    
+    res.writeHead(200,{'Conten-Type':'application/json'});//sending data via json
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.end('{"message":"'+'login:'+req.session.username+',  username:'+req.body.username
+        +', update user Err:'+errors[0].msg+' , email:'+req.body.email+'"}'
+        );
+    };
+    
+    var id = req.body._id;
+    console.log('update user: ' + id);
+    db.collection(yourCollectionName, function(err, collection) {
+        collection.update({'_id':new BSON.ObjectID(id)},{email:req.body.email,username:req.body.username,password:req.body.pwd}, {safe:true}, function(err, result) {
+            if (err) {
+                res.end('{"message":"'+'update error:An error has occurred - ' + err+'"}');
+            } else {
+                res.end('{"message":"'+'success: user is updated"}');
+            }
+        });
+    });
+}
+
+/*
 *  Delete the user.
 */
 exports.deleteUser = function(req, res) {
@@ -166,7 +199,7 @@ exports.deleteUser = function(req, res) {
             collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
                 res.writeHead(200,{'Conten-Type':'application/json'});//sending data via json
                 if (err) {
-                    res.end('{"message":"'+'error:An error has occurred - ' + err+'"}');
+                    res.end('{"message":"'+'delete error:An error has occurred - ' + err+'"}');
                 } else {
                     res.end('{"message":"'+'success: user is deleted"}');
                 }
