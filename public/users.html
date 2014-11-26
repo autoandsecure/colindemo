@@ -2,12 +2,13 @@
 <head>
     <meta charset="utf-8">
     <title>Colindemo user management</title>
+	<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'/>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="./javascripts/angular.min.js"></script>
     <script src="./javascripts/myjs.js"></script>
 </head>
 <body ng-controller="parentCtrl">
-<div class="loginbar" ng-controller="LoginCtrl">
+<div class="nav navbar navbar-inverse navbar-fixed-top" ng-controller="LoginCtrl">
     <form  ng-show="!loggedin" id="login-form" ng-submit="login()" enctype="multipart/form-data">
         <div class="">
             default user:colin1 and pwd:123456
